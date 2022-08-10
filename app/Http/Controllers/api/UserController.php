@@ -19,7 +19,7 @@ class UserController extends Controller
     {
 
 
-        $users = User::with('colors')->paginate(10);
+        $users = User::with('colors')->orderBy('id','desc')->paginate(10);
 
         return response()->json($users);
     }

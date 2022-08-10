@@ -15,7 +15,7 @@ class ColorController extends Controller
      */
     public function index()
     {
-        $colors = Color::with('users')->paginate(5);
+        $colors = Color::with('users')->orderBy('id','desc')->paginate(5);
 
         return response()->json($colors);
     }

@@ -26,7 +26,7 @@ class ColorUserContoller extends Controller
         try{
 
 
-            $colors = collect($request->colors);
+
 
             $userColor = DB::table('color_user')->where('user_id', $user_id)
             ->whereIn('color_id', $request->colors)->first();
@@ -35,12 +35,12 @@ class ColorUserContoller extends Controller
                 return  response()->json(["error"=>"color is already linked to that user"]);
             }
 
-
+            $colors = collect($request->colors);
             $user = User::findOrFail($user_id);
 
             $user->colors()->syncWithoutDetaching($colors->unique());
 
-        return  response()->json(["success"=>"Color binded successfully"]);
+            return  response()->json(["success"=>"Color binded successfully"]);
 
 
         }catch (\Exception $e) {
@@ -64,7 +64,8 @@ class ColorUserContoller extends Controller
             $user = User::findOrFail($user_id);
 
             $user->colors()->detach($request->colors);
-           return  response()->json(["success"=>"Color unbind successfully"]);
+
+            return  response()->json(["success"=>"Color unbind successfully"]);
 
 
         }catch (\Exception $e) {
