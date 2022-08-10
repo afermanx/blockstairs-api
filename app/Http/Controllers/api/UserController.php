@@ -10,8 +10,27 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+   /**
+     * Get list Users
+     * @OA\Get (
+     *     path="/api/users",
+     *     tags={"Users"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="rows",
+     *                 @OA\Items(
+     *                     type="object",
+     *
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
      *
      * @return \Illuminate\Http\Response
      */
@@ -24,8 +43,72 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    /**
-     * Store a newly created resource in storage.
+   /**
+     * Create new User
+     * @OA\Post (
+     *     path="/api/user",
+     *     tags={"Users"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="password",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="passwordConfirmation",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="token_name",
+     *                          type="string"
+     *                      ),
+     *                 ),
+     *                 example={
+     *                  "name":"Nome do Usuario",
+     *                  "email":"email",
+     *                  "password":"senha",
+     *                  "passwordConfirmation":"confirme a senha",
+     *                  "token_name":"nome do token"
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="name", type="string", example="Joe Doe"),
+     *              @OA\Property(property="email", type="string", example="joe@blocstairs.com"),
+     *              @OA\Property(property="password", type="string", example="123456"),
+     *              @OA\Property(property="passwordConfirmation", type="string", example="123456"),
+     *              @OA\Property(property="token_name", type="string", example="Fulano APi"),
+     *
+     *
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="invalid",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="msg", type="string", example="fail"),
+     *          )
+     *      )
+     * )
+     *
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -47,8 +130,32 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
+      /**
+     * Get Detail User
+     * @OA\Get (
+     *     path="/api/user/{id}",
+     *     tags={"Users"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="id", type="number", example=1),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="email", type="string", example="email"),
+     *              @OA\Property(property="active", type="string", example="active"),     *
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="colors", type="string", example="colors[]")
+     *         )
+     *     )
+     * )
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -56,8 +163,10 @@ class UserController extends Controller
     public function show($id)
     {
 
+
+
         try{
-        $user = User::with('colors')->findOrFail($id);
+        $user = User::with('colors')->find($id);
             return  response()->json(['user'=>$user]);
         }
         catch (\Exception $e) {
@@ -65,8 +174,67 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
+ /**
+     * Update User
+     * @OA\Put (
+     *     path="/api/user/{id}",
+     *     tags={"Users"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="password",
+     *                          type="string"
+     *                      ),
+     *                       @OA\Property(
+     *                          property="passwordConfirmation",
+     *                          type="string"
+     *                      ),
+     *
+     *
+     *                 ),
+     *                 example={
+     *                     "name":"example title",
+     *                     "email":"example content",
+     *                     "password":"example content",
+     *                     "passwordConfirmation":"example content"
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="id", type="string", example="id"),
+     *              @OA\Property(property="name", type="string", example="name"),
+     *              @OA\Property(property="email", type="string", example="email"),
+     *              @OA\Property(property="password", type="string", example="password"),
+     *              @OA\Property(property="passwordConfirmation", type="string", example="passwordConfirmation"),
+     *              @OA\Property(property="updated_at", type="string", example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string", example="2021-12-11T09:25:53.000000Z")
+     *          )
+     *      )
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -97,7 +265,7 @@ class UserController extends Controller
             ]);
                 $userUpdate = User::findOrFail($id)->update([
                     'name'=>$request->name,
-                    'password'=>  $request->password
+                    'password'=>  Hash::make($request->password)
                 ]);
 
             }else{
@@ -110,7 +278,7 @@ class UserController extends Controller
                 $userUpdate = User::findOrFail($id)->update([
                     'name'=>$request->name,
                     'email'=>$request->email,
-                    'password'=>  $request->password
+                    'password'=>  Hash::make($request->password)
                 ]);
 
             }
@@ -127,8 +295,26 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
+     /**
+     * Delete User
+     * @OA\Delete (
+     *     path="/api/user/{id}",
+     *     tags={"Users"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="msg", type="string", example="delete user success")
+     *         )
+     *     )
+     * )
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

@@ -10,8 +10,52 @@ use App\Http\Controllers\Controller;
 
 class ColorUserContoller extends Controller
 {
-     /**
-     * Bind the specified resource in storage.
+  /**
+     * Bind Color User
+     * @OA\Put (
+     *     path="/api/bind_color/{user_id}",
+     *     tags={"Bind and Unbind"},
+     *     security={{ "sanctum":{} }},
+     *   @OA\Parameter(
+     *         in="path",
+     *         name="user_id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="color_id",
+     *                          type="int"
+     *                      ),
+     *
+     *
+     *                 ),
+     *                 example={
+     *                  "colors":"[{color_id:int}]",
+     *
+     *
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Color binded successfully",
+     *
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="invalid",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="msg", type="string", example="fail"),
+     *          )
+     *      )
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $user_id
@@ -22,11 +66,10 @@ class ColorUserContoller extends Controller
     {
 
 
+        dd($request->all(), $user_id);
+
 
         try{
-
-
-
 
             $userColor = DB::table('color_user')->where('user_id', $user_id)
             ->whereIn('color_id', $request->colors)->first();

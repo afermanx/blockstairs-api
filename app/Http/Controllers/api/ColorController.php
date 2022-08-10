@@ -8,8 +8,27 @@ use App\Http\Controllers\Controller;
 
 class ColorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+/**
+     * Get list Colors
+     * @OA\Get (
+     *     path="/api/colors",
+     *     tags={"Colors"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *             @OA\Property(
+     *                 type="array",
+     *                 property="rows",
+     *                 @OA\Items(
+     *                     type="object",
+     *
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
      *
      * @return \Illuminate\Http\Response
      */
@@ -21,7 +40,57 @@ class ColorController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create new Color
+     * @OA\Post (
+     *     path="/api/color",
+     *     tags={"Colors"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="description",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="hex",
+     *                          type="string"
+     *                      ),
+     *
+     *                 ),
+     *                 example={
+     *                  "description":"Branco",
+     *                  "hex":"#ffff"
+     *
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Color registered successfully",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="string", example="color id"),
+     *              @OA\Property(property="description", type="string", example="description color"),
+     *              @OA\Property(property="hex", type="string", example="#fffff"),
+     *              @OA\Property(property="rgb", type="string", example="rgb(255 255 0 0)"),
+     *              @OA\Property(property="updated_at", type="string",  example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string",  example="2021-12-11T09:25:53.000000Z"),
+     *
+     *
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="invalid",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="msg", type="string", example="fail"),
+     *          )
+     *      )
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -49,8 +118,32 @@ class ColorController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
+     /**
+     * Get Detail Color
+     * @OA\Get (
+     *     path="/api/color/{id}",
+     *     tags={"Colors"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *              @OA\Property(property="id", type="string", example="color id"),
+     *              @OA\Property(property="description", type="string", example="description color"),
+     *              @OA\Property(property="hex", type="string", example="#fffff"),
+     *              @OA\Property(property="rgb", type="string", example="rgb(255 255 0 0)"),
+     *              @OA\Property(property="updated_at", type="string",  example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string",  example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="colors", type="string", example="colors[]")
+     *         )
+     *     )
+     * )
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -66,8 +159,55 @@ class ColorController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
+   /**
+     * Update Color
+     * @OA\Put (
+     *     path="/api/color/{id}",
+     *     tags={"Colors"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="description",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="hex",
+     *                          type="string"
+     *                      ),
+     *                 ),
+     *                 example={
+     *                     "description":"example description",
+     *                     "hex":"example #ffff"
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Color successfully changed",
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="id", type="string", example="color id"),
+     *              @OA\Property(property="description", type="string", example="description color"),
+     *              @OA\Property(property="hex", type="string", example="#fffff"),
+     *              @OA\Property(property="rgb", type="string", example="rgb(255 255 0 0)"),
+     *              @OA\Property(property="updated_at", type="string",  example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="created_at", type="string",  example="2021-12-11T09:25:53.000000Z"),
+     *              @OA\Property(property="users", type="string", example="users[]")
+     *          )
+     *      )
+     * )
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -97,7 +237,7 @@ class ColorController extends Controller
 
                 ]);
             }
-            return  response()->json(["success"=>"Color successfully changed"]);
+            return  response()->json(["success"=>"Color successfully changed", "color"=>$color]);
         } catch (\Exception $e) {
             return  response()->json(["error"=> $e->getMessage()]);
         }
@@ -106,9 +246,26 @@ class ColorController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
+         /**
+     * Delete Color
+     * @OA\Delete (
+     *     path="/api/color/{id}",
+     *     tags={"Colors"},
+     *     security={{ "sanctum":{} }},
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="success",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="msg", type="string", example="Color successfully deleted")
+     *         )
+     *     )
+     * )
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

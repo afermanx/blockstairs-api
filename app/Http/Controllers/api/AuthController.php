@@ -16,6 +16,72 @@ class AuthController extends Controller
 
      use ApiResponser;
 
+
+    /**
+     * Register User
+     * @OA\Post (
+     *     path="/api/auth/register",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *                      @OA\Property(
+     *                          property="name",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="email",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="password",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="passwordConfirmation",
+     *                          type="string"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="token_name",
+     *                          type="string"
+     *                      ),
+     *                 ),
+     *                 example={
+     *                  "name":"Nome do Usuario",
+     *                  "email":"emailuser@blockstairs.com",
+     *                  "password":"123456",
+     *                  "passwordConfirmation":"123456",
+     *                  "token_name":"Username Api"
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="name", type="string", example="Joe Doe"),
+     *              @OA\Property(property="email", type="string", example="joe@blocstairs.com"),
+     *              @OA\Property(property="password", type="string", example="123456"),
+     *              @OA\Property(property="passwordConfirmation", type="string", example="123456"),
+     *              @OA\Property(property="token_name", type="string", example="Fulano APi"),
+     *
+     *
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="invalid",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="msg", type="string", example="fail"),
+     *          )
+     *      )
+     * )
+     */
     public function register(UserStoreRequest $request)
     {
 
@@ -31,6 +97,47 @@ class AuthController extends Controller
         ],'User registered successfully');
     }
 
+     /**
+     * Login User
+     * @OA\Post (
+     *     path="/api/auth/login",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                      type="object",
+     *
+     *                 ),
+     *                 example={     *
+     *                  "email":"emailuser@blockstairs.com",
+     *                  "password":"123456",
+     *
+     *                }
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(
+     *
+     *              @OA\Property(property="email", type="string", example="joe@blocstairs.com"),
+     *              @OA\Property(property="password", type="string", example="123456"),
+     *
+     *
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="invalid",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="msg", type="string", example="fail"),
+     *          )
+     *      )
+     * )
+     */
    public function login(Request $request)
     {
         $attr = $request->validate([
@@ -50,6 +157,31 @@ class AuthController extends Controller
         ], "successfully logged");
     }
 
+    /**
+     * Logout User
+     * @OA\Post (
+     *     path="/api/auth/logout",
+     *     tags={"Auth"},
+     *     security={{ "sanctum":{}}},     *
+     *     description="Logout with bearertoken",
+     *      @OA\Response(
+     *          response=200,
+     *          description="success",
+     *          @OA\JsonContent(   *
+     *
+     *
+     *
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="invalid",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="msg", type="string", example="fail"),
+     *          )
+     *      )
+     * )
+     */
    public function logout(Request $request)
     {
         # instaciei class personalAccessToken para pegar o token do user logado para deletar somente o token usado para o login
