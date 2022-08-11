@@ -4,9 +4,13 @@
 
 
 
-### Blockstairs Api Teste
+## Blockstairs Api Teste
 
-Fala Dev!
+### Modelo lógico 
+
+![relação](https://user-images.githubusercontent.com/31674845/184058872-0710b70d-2aff-449b-9c30-1f5a8b01ffbb.jpeg)
+
+
 <p>Aqui vai umas dicas para rodar o teste</p>
 
 - Conferir a versão do php, o teste esta na Versão "^9.0".
