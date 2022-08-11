@@ -16,6 +16,14 @@ Fala Dev!
     cd blockstairs-api
     composer install      
   ```
+ - Após isso basta publicar o provider e gerar os arquivos do Swagger.
+ ```bash
+   php artisan vendor:publish
+    #Provider: L5Swagger\L5SwaggerServiceProvider ........... 5
+   php artisan l5-swagger:generate
+  ```
+ 
+  
   
 - Use o .env.example pois existes unn parametros a ser mantidos.
     - Configure o banco de dados da sua escolha e depois de tudo certo rode o comando abaixo.    
@@ -23,6 +31,7 @@ Fala Dev!
     php artisan migrate --seed 
     
   ```
+  
 ### Documentação e arquivo do insomnia.
 
 - O arquivo com todos os endpoints para importar no insomnia <a href="https://github.com/afermanx/blockstairs-api/tree/main/doc">Blockstairsapi_2022-08-10.json</a>
