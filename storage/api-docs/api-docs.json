@@ -41,11 +41,11 @@
                                 },
                                 "type": "object",
                                 "example": {
-                                    "name": "Nome do Usuario",
+                                    "name": "Username",
                                     "email": "emailuser@blockstairs.com",
                                     "password": "123456",
                                     "passwordConfirmation": "123456",
-                                    "token_name": "Username Api"
+                                    "token_name": "Name token"
                                 }
                             }
                         }
@@ -178,12 +178,7 @@
                 "operationId": "392b7d1309524bd8a5cb5272d91f6a5e",
                 "responses": {
                     "200": {
-                        "description": "success",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
+                        "description": "success"
                     },
                     "400": {
                         "description": "invalid",
@@ -539,7 +534,76 @@
                     "Bind and Unbind"
                 ],
                 "summary": "Bind Color User",
+                "description": "you can bind a color array with one or more colors in object.",
                 "operationId": "5d1bc943549d9a3b9cade5a074091bc3",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "": {
+                                        "properties": {
+                                            "color_id": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "colors": "[{color_id:int}]"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Color binded successfully"
+                    },
+                    "400": {
+                        "description": "invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "fail"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/unbind_color/{user_id}": {
+            "post": {
+                "tags": [
+                    "Bind and Unbind"
+                ],
+                "summary": "Bind Color User",
+                "description": "you can bind a color array with one or more colors in object.",
+                "operationId": "2590ccc19df597c705aa7721aaad5baf",
                 "parameters": [
                     {
                         "name": "user_id",
@@ -669,11 +733,11 @@
                                 },
                                 "type": "object",
                                 "example": {
-                                    "name": "Nome do Usuario",
-                                    "email": "email",
-                                    "password": "senha",
-                                    "passwordConfirmation": "confirme a senha",
-                                    "token_name": "nome do token"
+                                    "name": "Username",
+                                    "email": "emailuser@blockstairs.com",
+                                    "password": "123456",
+                                    "passwordConfirmation": "123456",
+                                    "token_name": "Name Token"
                                 }
                             }
                         }

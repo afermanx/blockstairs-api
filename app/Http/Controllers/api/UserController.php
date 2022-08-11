@@ -77,11 +77,11 @@ class UserController extends Controller
      *                      ),
      *                 ),
      *                 example={
-     *                  "name":"Nome do Usuario",
-     *                  "email":"email",
-     *                  "password":"senha",
-     *                  "passwordConfirmation":"confirme a senha",
-     *                  "token_name":"nome do token"
+     *                  "name":"Username",
+     *                  "email":"emailuser@blockstairs.com",
+     *                  "password":"123456",
+     *                  "passwordConfirmation":"123456",
+     *                  "token_name":"Name Token"
      *                }
      *             )
      *         )

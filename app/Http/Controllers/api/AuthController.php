@@ -50,11 +50,11 @@ class AuthController extends Controller
      *                      ),
      *                 ),
      *                 example={
-     *                  "name":"Nome do Usuario",
+     *                  "name":"Username",
      *                  "email":"emailuser@blockstairs.com",
      *                  "password":"123456",
      *                  "passwordConfirmation":"123456",
-     *                  "token_name":"Username Api"
+     *                  "token_name":"Name token"
      *                }
      *             )
      *         )
@@ -166,12 +166,7 @@ class AuthController extends Controller
      *     description="Logout with bearertoken",
      *      @OA\Response(
      *          response=200,
-     *          description="success",
-     *          @OA\JsonContent(   *
-     *
-     *
-     *
-     *          )
+     *          description="success"     *
      *      ),
      *      @OA\Response(
      *          response=400,
