@@ -17,15 +17,15 @@ Fala Dev!
     composer install      
   ```
  - Após isso basta publicar o provider e gerar os arquivos do Swagger.
- ```bash
-   php artisan vendor:publish
-    #Provider: L5Swagger\L5SwaggerServiceProvider ........... 5
-   php artisan l5-swagger:generate
-  ```
+     ```bash
+       php artisan vendor:publish
+        #Provider: L5Swagger\L5SwaggerServiceProvider ........... 5
+       php artisan l5-swagger:generate
+      ```
  
   
   
-- Use o .env.example pois existes unn parametros a ser mantidos.
+- Use o .env.example pois existem alguns parâmetros a ser mantidos.
     - Configure o banco de dados da sua escolha e depois de tudo certo rode o comando abaixo.    
    ```bash
     php artisan migrate --seed 
