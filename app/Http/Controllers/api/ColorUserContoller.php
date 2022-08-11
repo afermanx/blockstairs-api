@@ -79,11 +79,13 @@ class ColorUserContoller extends Controller
 
             $user->colors()->syncWithoutDetaching($colors->unique());
 
-            return  response()->json(["success"=>"Color binded successfully"]);
+
+            return $this->success("Color binded successfully". 200);
+
 
 
         }catch (\Exception $e) {
-            return  response()->json(["error"=> $e->getMessage()]);
+            return $this->error($e->getMessage,400);
         }
 
 
@@ -148,11 +150,11 @@ class ColorUserContoller extends Controller
 
             $user->colors()->detach($request->colors);
 
-            return  response()->json(["success"=>"Color unbind successfully"]);
+            return $this->success("Color unbinded successfully". 200);
 
 
         }catch (\Exception $e) {
-            return  response()->json(["error"=> $e->getMessage()]);
+            return $this->error($e->getMessage,400);
         }
     }
 }

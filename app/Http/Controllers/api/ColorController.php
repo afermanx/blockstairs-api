@@ -36,7 +36,9 @@ class ColorController extends Controller
     {
         $colors = Color::with('users')->orderBy('id','desc')->paginate(5);
 
-        return response()->json($colors);
+        return $this->success([
+            'users' =>$colors,
+        ]);
     }
 
     /**
@@ -111,10 +113,12 @@ class ColorController extends Controller
                 'rgb'=>hex2Rgb($request->hex)
 
             ]);
+            return $this->success([
+                'users' =>$color,
+            ],"Color registered successfully");
 
-            return  response()->json(["success"=>"Color registered successfully", 'color'=>$color]);
         } catch (\Exception $e) {
-            return  response()->json(["error"=> $e->getMessage()]);
+           return $this->error($e->getMessage(),400);
         }
     }
 
@@ -152,10 +156,14 @@ class ColorController extends Controller
     {
         try{
             $color = Color::with('users')->findOrFail($id);
-                return  response()->json(['color'=>$color]);
+
+            return $this->success([
+                'users' =>$color,
+            ]);
+
             }
             catch (\Exception $e) {
-                return  response()->json(["error"=> $e->getMessage()]);
+               return $this->error($e->getMessage(),400);
         }
     }
 
@@ -237,9 +245,13 @@ class ColorController extends Controller
 
                 ]);
             }
-            return  response()->json(["success"=>"Color successfully changed", "color"=>$color]);
+
+            return $this->success([
+                'users' =>$color,
+            ],"Color successfully changed");
+
         } catch (\Exception $e) {
-            return  response()->json(["error"=> $e->getMessage()]);
+           return $this->error($e->getMessage(),400);
         }
 
 
@@ -274,9 +286,12 @@ class ColorController extends Controller
         try{
             $user = Color::findOrFail($id)->delete();
 
-            return  response()->json(["success"=>"Color successfully deleted",]);
+            return $this->success("Color successfully deleted". 200);
+
+
+
            }catch (\Exception $e) {
-                return  response()->json(["error"=> $e->getMessage()]);
+               return $this->error($e->getMessage(),400);
            }
     }
 }

@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserStoreRequest;
 
 class UserController extends Controller
 {
+
+    use ApiResponser;
    /**
      * Get list Users
      * @OA\Get (
@@ -40,7 +43,9 @@ class UserController extends Controller
 
         $users = User::with('colors')->orderBy('id','desc')->paginate(10);
 
-        return response()->json($users);
+        return $this->success([
+            'users' =>$users,
+        ]);
     }
 
    /**
@@ -123,9 +128,14 @@ class UserController extends Controller
                 'password'=>Hash::make($request->password)
             ]);
 
-            return  response()->json(["success"=>"User registered successfully", 'user'=>$user]);
+
+            return $this->success([
+                'users' =>$user,
+            ], 'User registered successfully');
+
         } catch (\Exception $e) {
-            return  response()->json(["error"=> $e->getMessage()]);
+
+            return $this->error($e->getMessage(),400);
         }
 
     }
@@ -164,13 +174,16 @@ class UserController extends Controller
     {
 
 
-
         try{
         $user = User::with('colors')->find($id);
-            return  response()->json(['user'=>$user]);
+
+        return $this->success([
+            'users' =>$user,
+        ]);
+
         }
         catch (\Exception $e) {
-            return  response()->json(["error"=> $e->getMessage()]);
+             return $this->error($e->getMessage(),400);
         }
     }
 
@@ -283,11 +296,15 @@ class UserController extends Controller
 
             }
 
-            return  response()->json(["success"=>"User successfully changed"]);
+            return $this->success([
+                'users' =>$user,
+            ],'User successfully changed');
+
+            return  response()->json(["success"=>""]);
 
         }catch (\Exception $e) {
 
-            return  response()->json(["error"=> $e->getMessage()]);
+             return $this->error($e->getMessage(),400);
 
         }
 
@@ -324,9 +341,10 @@ class UserController extends Controller
        try{
         $user = User::findOrFail($id)->delete();
 
-        return  response()->json(["success"=>"User successfully deleted",]);
+        return $this->success('User successfully deleted', 200);
+
        }catch (\Exception $e) {
-            return  response()->json(["error"=> $e->getMessage()]);
+             return $this->error($e->getMessage(),400);
        }
     }
 }
